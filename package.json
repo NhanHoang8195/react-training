@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "eslint-plugin-i18next": "^4.4.0",
     "i18next": "^19.6.3",
     "i18next-http-backend": "^1.0.17",
     "react": "^16.13.1",
