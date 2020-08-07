@@ -7,7 +7,7 @@ import './i18n';
 
 ReactDOM.render(
   <Suspense fallback={"ascd"}>
-    <h1>bacss</h1>
+    <h1>bacsssssssss</h1>
     <App />
   </Suspense>,
   document.getElementById('root')
