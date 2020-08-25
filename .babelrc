@@ -1,10 +1,5 @@
 {
   "presets": [
     "react-app"
-  ],
-  "plugins": [
-    ["i18next-extract", {
-      "locales": []
-    }]
   ]
 }

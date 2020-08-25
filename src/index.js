@@ -1,14 +1,16 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux'
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+// import * as serviceWorker from './serviceWorker';
+import store from './store';
 import './i18n';
 
 ReactDOM.render(
   <Suspense fallback={"ascd"}>
-    <h1>dddd</h1>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </Suspense>,
   document.getElementById('root')
 );
@@ -16,4 +18,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// serviceWorker.unregister();

@@ -1,20 +1,19 @@
-import React, { Suspense } from 'react';
+import React, { lazy } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
-import Home from './containers/home';
-import About from './containers/about';
-import Users from './containers/user';
 import './App.css';
 import {useTranslation} from 'react-i18next';
+const Home = lazy(() => import('./containers/home'));
+const About = lazy(() => import('./containers/about'));
+const Users = lazy(() => import('./containers/user'));
 
 function App() {
   const { i18n } = useTranslation('home');
   return (
-    <Suspense fallback={"loading"}>
       <Router>
         <button onClick={() => i18n.changeLanguage('en')}>en</button>
         <button onClick={() => i18n.changeLanguage('de')}>de</button>
@@ -45,7 +44,6 @@ function App() {
           </Route>
       </Switch>
     </Router>
-    </Suspense>
   );
 }
 
