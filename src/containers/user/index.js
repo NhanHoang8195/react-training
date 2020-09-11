@@ -1,19 +1,22 @@
-import React  from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {decreaseUser} from './action';
+import * as actions from './action';
 import {connect} from 'react-redux';
-import {Button, TextField} from '@material-ui/core';
+import useInjectReducer from '../useWrapper';
+import userReducer from './reducer';
+
 
 // i18n translations might still be loaded by the http backend
 // use react's Suspense
-function User() {
+function User(props) {
   const { t } = useTranslation('user');
   return (<div>
     <h1>{t('title')}</h1>
     <p>{t('description.part1')}</p>
     <p>{t('description.part2')}</p>
-    <Button>adjklsdj</Button>
-    <TextField />
+    <h1>Count: {props.count}</h1>
+    <button onClick={props.increaseUser}>User Increase</button>
+    <button onClick={props.decreaseUser}>User Decrease</button>
   </div>);
 }
 
@@ -22,8 +25,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  // increaseUser: increaseUser,
-  decreaseUser1: decreaseUser,
+  increaseUser: actions.increaseUser,
+  decreaseUser: actions.decreaseUser,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(User);
+const wrappedComponent = useInjectReducer(User, userReducer, 'userReducer')
+
+export default connect(mapStateToProps, mapDispatchToProps)(wrappedComponent);

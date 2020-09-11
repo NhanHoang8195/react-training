@@ -10,8 +10,7 @@ import {useTranslation} from 'react-i18next';
 const Home = lazy(() => import('./containers/home'));
 const About = lazy(() => import('./containers/about'));
 const Users = lazy(() => import('./containers/user'));
-
-function App() {
+function App(props) {
   const { i18n } = useTranslation('home');
   return (
       <Router>

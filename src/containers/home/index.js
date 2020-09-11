@@ -2,7 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {increaseHome, decreaseHome} from './action';
 import { useTranslation } from 'react-i18next';
-
+import useInjectReducer from '../useWrapper';
+import homeReducer from './reducer';
 
 // i18n translations might still be loaded by the http backend
 // use react's Suspense
@@ -19,13 +20,18 @@ function Home(props) {
     <h1>Value for home {count}</h1>
   </div>);
 }
-const mapStateToProps = state => ({
-  count: state.homeReducer.count,
-});
+const mapStateToProps = state => {
+  console.log('come home');
+  return {
+    count: state.homeReducer.count,
+  }
+};
 
 const mapDispatchToProps = {
   increaseHome,
   decreaseHome,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+const wrappedComponent = useInjectReducer(Home, homeReducer, 'homeReducer');
+
+export default connect(mapStateToProps, mapDispatchToProps)(wrappedComponent);
