@@ -21,7 +21,6 @@ function Home(props) {
   </div>);
 }
 const mapStateToProps = state => {
-  console.log('come home');
   return {
     count: state.homeReducer.count,
   }

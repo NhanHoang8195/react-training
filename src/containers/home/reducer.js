@@ -1,6 +1,6 @@
 import {HOME_INCREASE, HOME_DECREASE} from './action';
 
-const initialState = {
+const initialState ={
   count: 0,
 };
 const actionHandler = {};
