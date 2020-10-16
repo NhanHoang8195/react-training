@@ -1,23 +1,13 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import * as actions from './action';
 import {connect} from 'react-redux';
 import useInjectReducer from '../useWrapper';
 import userReducer from './reducer';
 
-
-
-
 // i18n translations might still be loaded by the http backend
 // use react's Suspense
 function User(props) {
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const refcode = params.get('refcode');
-    if (refcode) {
-      props.increaseUser(refcode);
-    }
-  }, []);
   const { t } = useTranslation('user');
   return (
     <div>
