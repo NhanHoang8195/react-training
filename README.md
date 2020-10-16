@@ -1,5 +1,51 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped and ejected with [Create React App](https://github.com/facebook/create-react-app).
 
+# React-training
+
+This is a pet project is used to practice for developers.
+
+Currenty this project contains:
+
+1. How to use react-i18next in reactjs project.
+2. How to implement <b>redux code splitting</b>.
+3. How to implement <b>redux code splitting</b> with [redux-persist](https://github.com/rt2zz/redux-persist) (coming soon)
+
+## 1. How to use react-i18next.
+
+You can visit [react-i18next](https://react.i18next.com/) homepage to see the details.
+In this project, just show how to implement react-i18next with dynamic loading translations.
+## 2. How to implement redux code splitting
+
+The principle for this implementation, you can read at [redux-code-splitting](https://redux.js.org/recipes/code-splitting).
+
+1. Why do I need redux code splitting?
+    * Without redux code splitting, your site not only load redux codes for `/homepage` (`homepageReducer` for example), but also load all of redux codes for of all of other pages, that means the site user is landing on waste more time to load. 
+    
+        ex: The user is reaching to `/homepage`, without redux code splitting, then the site need to download all of codes of redux for others site like `/about` (with `aboutReducer` for example),  or `/user` (with `userReducer` for example), and that is not necessary at that moment.
+    
+    * With <b>redux code splitting</b> we can only load `homepageReducer` for `/homepage`.
+
+2. When can i use it?
+
+     * Your project MUST implement code-splitting for loading sites, that means if user visit `homepage` then the website should download only `homepage`. 
+     * You care about performance.
+     
+3. How do i verify that the redux code splitting works (in this project)?
+    * First of all, this project has separated into 3 routes with `/`, `/about`, and `/users`
+    * `homepage` and `about` routes are `static reducer` which mean these are reducers need to be used in all of sites.
+    * only `user` route is using redux dynamic loading which mean the reducer only avaible when user reach on `/users`
+    
+    Inspect the page after running this project at port `4000`, you can view sources in the chrome developer tool if you are using chrome.
+    
+    * If you are at route `/` or `/about` then the source code only contains `about` or `home` folder (contains reducer and actions for these pages).
+    * If you are at route `/users` after visiting `/` or `/about`, then you will see 1 more folder named `user`, that means the `user` page has dymanic loading when user reaching route `/users`
+    * If you visit `/users` and you didn't visit `/` or `/about`, you will see at least 3 folders named `about`, `home`, and `user`. The `user` folder here of course because we are at `/users`, `about` and `home` existing here because we are using `static reducer` for those.
+
+## 3. How to implement <b>redux code splitting</b> [Coming soon]
+   This will be coming soon.
+
+## 4. Questions
+   Don't hestiate to contact me if you have any questions.
 ## Available Scripts
 
 In the project directory, you can run:
@@ -7,62 +53,4 @@ In the project directory, you can run:
 ### `yarn start`
 
 Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Open [http://localhost:4000](http://localhost:4000) to view it in the browser.

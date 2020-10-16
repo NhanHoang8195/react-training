@@ -2,8 +2,6 @@ import React  from 'react';
 import { useTranslation } from 'react-i18next';
 import {decreaseAbout, increaseAbout} from './action';
 import {connect} from 'react-redux';
-import useInjectReducer from '../useWrapper';
-import aboutReducer from './reducer';
 
 // i18n translations might still be loaded by the http backend
 // use react's Suspense
@@ -28,6 +26,5 @@ const mapDispatchToProps = {
   increaseAbout,
   decreaseAbout,
 };
-const wrappedComponent = useInjectReducer(About, aboutReducer, 'aboutReducer');
 
-export default connect(mapStateToProps, mapDispatchToProps)(wrappedComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(About);
