@@ -4,6 +4,8 @@ import * as actions from './action';
 import {connect} from 'react-redux';
 import useInjectReducer from '../useWrapper';
 import userReducer from './reducer';
+import userSaga from './saga';
+import {REDUCER_KEYS} from 'app/constants/reducerKeys';
 
 // i18n translations might still be loaded by the http backend
 // use react's Suspense
@@ -32,5 +34,5 @@ const mapDispatchToProps = {
   decreaseUser: actions.decreaseUser,
 };
 
-const wrappedComponent =  useInjectReducer(User, userReducer, 'userReducer');
+const wrappedComponent =  useInjectReducer(User, userReducer, userSaga, REDUCER_KEYS.USER_REDUCER);
 export default connect(mapStateToProps, mapDispatchToProps)(wrappedComponent);

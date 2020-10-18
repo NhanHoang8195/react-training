@@ -3,3 +3,4 @@ export const REDUCER_KEYS = {
   HOME_REDUCER: 'homeReducer',
   USER_REDUCER: 'userReducer',
 };
+export const PERSIST_KEY = '_persist';

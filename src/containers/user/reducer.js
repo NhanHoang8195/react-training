@@ -1,15 +1,21 @@
-import {USER_INCREASE, USER_DECREASE} from './action';
+import * as EVENT from './events';
 import produce from 'immer';
+import {persistReducer} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { REDUCER_KEYS} from '../../constants/reducerKeys';
 
 const initialState = {
   count: 0,
+  loading: false,
+  data: [],
+  error: null,
 };
 const actionHandler = {};
 
-actionHandler[USER_INCREASE] = (state) => produce(state, (draft) => {
+actionHandler[EVENT.USER_INCREASE] = (state) => produce(state, (draft) => {
   draft.count = state.count + 1;
 });
-actionHandler[USER_DECREASE] = (state) => produce(state, (draft) => {
+actionHandler[EVENT.USER_DECREASE] = (state) => produce(state, (draft) => {
   draft.count = state.count - 1;
 });
 
@@ -19,4 +25,9 @@ const reducers = (state = initialState , action) => {
   return fn ? fn(state, action) : state;
 };
 
-export default reducers;
+const persistedReducer = persistReducer({
+  key: REDUCER_KEYS.USER_REDUCER,
+  storage,
+}, reducers);
+
+export default persistedReducer;

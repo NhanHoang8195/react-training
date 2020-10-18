@@ -1,36 +1,61 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import {createLogger} from 'redux-logger';
+import {persistStore, persistReducer} from 'redux-persist';
+import storage from "redux-persist/lib/storage";
+import { REDUCER_KEYS } from './constants/reducerKeys';
 import staticReducers from './reducers';
+import staticSagas from './sagas';
 
-const logger = createLogger();
-const middleware = [logger];
+const persistConfig = {
+  key: 'root',
+  storage,
+  // only contains reducer keys which are dynamic importing and need to save data to localStorage.
+  // others reducer keys which are static improting, need to be wrapped in a persistReducer in specific reducer file if want to save data to localStorage
+  // othewise, data for the reducer will not be saved.
+  whitelist: [REDUCER_KEYS.USER_REDUCER],
+};
 
+const sagaMiddleware = createSagaMiddleware();
+const middlewares = [sagaMiddleware];
+if (process.env.NODE_ENV === 'development') {
+  const logger = createLogger();
+  middlewares.push(logger);
+}
 // Configure the store
+const persistedReducer = persistReducer(persistConfig, createReducer());
+const store = createStore(persistedReducer, applyMiddleware(...middlewares));
+const persistor = persistStore(store);
+store.asyncReducers = {};
+store.asyncSaga = {};
 
-  const store = createStore(createReducer(), applyMiddleware(...middleware));
-  // Add a dictionary to keep track of the registered async reducers
-  store.asyncReducers = {}
-
-  // Create an inject reducer function
-  // This function adds the async reducer, and creates a new combined reducer
-  store.injectReducer = (key, asyncReducer) => {
-    // const shouldPersist = persistConfig.whitelist.includes(key);
-    if (staticReducers[key] || (store.asyncReducers[key])) {
-      return;
-    }
-    store.asyncReducers[key] = asyncReducer;
-    store.replaceReducer(createReducer(store.asyncReducers));
+store.injectReducer = (reducerKey, asyncReducer) => {
+  if (staticReducers[reducerKey] || store.asyncReducers[reducerKey]) {
+    return;
   }
+  store.asyncReducers[reducerKey] = asyncReducer;
+  store.replaceReducer(createReducer(store.asyncReducers));
+  if (persistConfig.whitelist.includes(reducerKey)) {
+    persistor.persist();
+  }
+};
+store.injectSaga = (reducerKey, asyncSaga) => {
+  if (store.asyncSaga[reducerKey] || !asyncSaga) {
+    return;
+  }
+  store.asyncSaga[reducerKey] = asyncSaga;
+  sagaMiddleware.run(asyncSaga);
+};
 
-  // Return the modified store
-
+sagaMiddleware.run(staticSagas);
 function createReducer(asyncReducers) {
   return combineReducers({
     ...staticReducers,
-    ...asyncReducers
+    ...asyncReducers,
   });
 }
 
 export {
   store,
+  persistor,
 };

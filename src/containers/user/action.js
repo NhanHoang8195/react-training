@@ -1,16 +1,13 @@
-export const USER_INCREASE = 'USER_INCREASE';
-export const USER_DECREASE = 'USER_DECREASE';
-
-
+import * as EVENT from './events';
 export function increaseUser(refcode) {
   return {
-    type: USER_INCREASE,
+    type: EVENT.USER_INCREASE,
     refcode,
   }
 }
 
 export function decreaseUser() {
   return {
-    type: USER_DECREASE,
+    type: EVENT.USER_DECREASE,
   }
 }

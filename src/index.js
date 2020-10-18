@@ -1,15 +1,18 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import App from './App';
-import {store} from './store';
+import {store, persistor} from './store';
 
 import './i18n';
 
 ReactDOM.render(
-  <Suspense fallback={"ascd"}>
+  <Suspense fallback={"null"}>
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </Suspense>,
   document.getElementById('root')
