@@ -8,7 +8,7 @@ Currenty this project contains:
 
 1. How to use react-i18next in reactjs project.
 2. How to implement <b>redux code splitting</b>.
-3. How to implement <b>redux code splitting</b> with [redux-persist](https://github.com/rt2zz/redux-persist) (coming soon)
+3. How to implement <b>redux code splitting</b> with [redux-persist](https://github.com/rt2zz/redux-persist)
 
 ## 1. How to use react-i18next.
 
@@ -41,8 +41,8 @@ The principle for this implementation, you can read at [redux-code-splitting](ht
     * If you are at route `/users` after visiting `/` or `/about`, then you will see 1 more folder named `user`, that means the `user` page has dymanic loading when user reaching route `/users`
     * If you visit `/users` and you didn't visit `/` or `/about`, you will see at least 3 folders named `about`, `home`, and `user`. The `user` folder here of course because we are at `/users`, `about` and `home` existing here because we are using `static reducer` for those.
 
-## 3. How to implement <b>redux code splitting</b> [Coming soon]
-   This will be coming soon.
+## 3. How to implement <b>redux code splitting</b>
+   You can checkout [redux-persist](https://github.com/NhanHoang8195/react-training/tree/redux-persist) branch, this branch combines how to implement redux-persist and redux-saga
 
 ## 4. Questions
    Don't hestiate to contact me if you have any questions.
